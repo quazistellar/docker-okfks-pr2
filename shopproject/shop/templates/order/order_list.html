@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - Список заказов{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+   <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Заказы</h2>
+                            <a href="{% url 'order_create_view' %}" class="btn btn-custom mb-3">Добавить новую позицию</a>
+                            <ul class="list-font">
+                                {% for position in orders %}
+                                    <li>
+                                        <a href="{% url 'order_detail_view' position.pk %}">Заказ №{{ position.pk }}</a>
+                                        <a href="{% url 'order_update_view' position.pk %}">Редактировать</a>
+                                        <a href="{% url 'order_delete_view' position.pk %}">Удалить</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_name %}
+Guiznotes - {% if form.instance.pk %}Редактировать заказ{% else %}Добавить новый заказ{% endif %}{% endblock %}
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+   <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>{% if form.instance.pk %}Редактировать заказ{% else %}Добавить новый заказ{% endif %}</h2>
+                            <form method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-custom">Сохранить</button>
+                            </form>
+                            <a href="{% url 'order_list_view' %}" class="btn btn-custom mt-3">Вернуться к списку заказов</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

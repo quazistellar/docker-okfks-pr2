@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Панель управления{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+
+    <main>
+        <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-title">Панель управления таблицами магазина GuizNotes</h2>
+                            <p>Выберите раздел для управления и кликните на него:</p>
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'guitar_list_view' %}" class="btn btn-custom w-100">Гитары</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'category_list_view' %}" class="btn btn-custom w-100">Категории</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'guitarform_list_view' %}" class="btn btn-custom w-100">Формы гитар</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'cart_list_view' %}" class="btn btn-custom w-100">Корзины</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'order_list_view' %}" class="btn btn-custom w-100">Заказы</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'status_list_view' %}" class="btn btn-custom w-100">Статусы</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'cartitem_list_view' %}" class="btn btn-custom w-100">Элементы корзины</a>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <a href="{% url 'orderitem_list_view' %}" class="btn btn-custom w-100">Элементы заказа</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

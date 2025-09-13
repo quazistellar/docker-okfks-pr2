@@ -1,0 +1,54 @@
+version: "3"
+services:
+  db:
+    restart: always
+    image: postgres:16
+    environment:
+      - POSTGRES_DB=upshka11
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    restart: always
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=upshka11
+      - DB_USER=postgres
+      - DB_PASSWORD=1
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+      - DJANGO_SUPERUSER_PASSWORD=password
+    volumes:
+      - .:/djangoproj
+      - static_volume:/djangoproj/static
+      - media_volume:/djangoproj/media
+    command: >
+      sh -c "
+        python manage.py migrate &&
+        python create_superuser.py &&
+        python manage.py collectstatic --noinput &&
+        python manage.py runserver 0.0.0.0:8000
+      "
+
+  adminer:
+    restart: always
+    image: adminer
+    ports:
+      - "8887:8080"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+  static_volume:
+  media_volume:

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - Позиция заказа №{{ orderitem.pk }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+      <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Позиция №{{ orderitem.pk }}</h2>
+                            <p>Позиции пользователя: {{ orderitem.order.user }}</p>
+                            <p>Количество этой позиции в заказе: {{ orderitem.quantity }}</p>
+                            <p>Гитара: {{ orderitem.guitar.name }}</p>
+                            <p>Заказ, в котором находится эта позиция: {{ orderitem.order }}</p>
+                            <a href="{% url 'orderitem_list_view' %}" class="btn btn-custom">Вернуться к списку позиций</a>
+                            <a href="{% url 'orderitem_update_view' orderitem.pk %}" class="btn btn-custom">Редактировать</a>
+                            <a href="{% url 'orderitem_delete_view' orderitem.pk %}" class="btn btn-custom">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

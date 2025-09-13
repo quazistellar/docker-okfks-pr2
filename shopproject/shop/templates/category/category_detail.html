@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - {{ category.name }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+     <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2>{{ category.name }}</h2>
+                                    <p>{{ category.description|default:"Описание отсутствует" }}</p>
+                                    <a href="{% url 'category_list_view' %}" class="btn btn-custom">Вернуться к списку категорий</a>
+                                    <a href="{% url 'category_update_view' category.pk %}" class="btn btn-custom">Редактировать</a>
+                                    <a href="{% url 'category_delete_view' category.pk %}" class="btn btn-custom">Удалить</a>
+                                </div>
+                                <div class="col-md-6">
+                                    <img src="{{ category.photo.url }}" class="contact-photo" alt="{{ category.name }}" style="width: 100%; height: auto; max-height: 300px; object-fit: cover;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Профиль{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+    <style>
+        .profile-main-container {
+            min-height: calc(100vh - 120px); 
+            padding: 70px 2%; 
+            max-width: 1400px; 
+            margin: 0 auto;
+            box-sizing: border-box;
+            background: #1e1e1e; 
+            color: #cccccc; 
+        }
+
+        .profile-card-wrapper {
+            background: #121212;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            padding: 3.5rem;
+            margin-bottom: 30px;
+            width: 100%; 
+        }
+
+        .profile-greeting {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .profile-greeting h1 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #2ecc71;
+            margin-bottom: 1.2rem; 
+        }
+
+        .profile-greeting p {
+            font-size: 1.3rem; 
+            color: #cccccc; 
+        }
+
+        .profile-divider {
+            border: 0;
+            border-top: 1px solid #444;
+            margin: 25px 0;
+        }
+
+        .profile-email {
+            text-align: center;
+            font-size: 1.3rem;
+            color: #cccccc;
+            margin-bottom: 2rem; 
+        }
+
+        .profile-email strong {
+            color: #2ecc71;
+        }
+
+        .profile-orders-title {
+            font-size: 2.8rem; 
+            font-weight: 500;
+            color: #2ecc71;
+            margin: 2rem 0; 
+            text-align: center;
+        }
+
+        .profile-orders-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            list-style: none;
+            padding: 0;
+        }
+
+        .profile-order-card {
+            flex: 1 1 calc(33.333% - 25px);
+            min-width: 300px;
+            background: #121212; 
+            border: none; 
+            border-radius: 8px; 
+            padding: 20px;
+            box-sizing: border-box;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+            position: relative;
+            z-index: 1; 
+        }
+
+        .profile-order-card:hover {
+            transform: translateY(-10px); 
+            box-shadow: 0 12px 25px rgba(46, 204, 113, 0.7); 
+        }
+
+        .profile-order-card h5 {
+            margin-top: 0;
+            font-size: 1.4rem; 
+            color: #2ecc71;
+            font-weight: 500;
+        }
+
+        .profile-order-card p {
+            color: #cccccc; 
+            margin: 8px 0;
+            font-size: 1.3rem; 
+        }
+
+        .profile-order-card p strong {
+            color: #2ecc71; 
+        }
+
+        .profile-order-card h6 {
+            color: #2ecc71; 
+            font-size: 1.3rem; 
+            margin: 15px 0 10px;
+        }
+
+        .profile-order-items {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 0;
+        }
+
+        .profile-order-items li {
+            margin-bottom: 8px;
+            color: #cccccc;
+            font-size: 1.3rem; 
+        }
+
+        .profile-no-orders {
+            text-align: center;
+            color: #2ecc71; 
+            font-size: 1.3rem; 
+            padding: 20px 0;
+        }
+        
+    </style>
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="profile-main-container">
+        <div class="profile-card-wrapper">
+            <div class="profile-greeting">
+                <h1>Привет, {{ user.username }}!</h1>
+                <p>Добро пожаловать в ваш личный кабинет.</p>
+            </div>
+            <hr class="profile-divider">
+            <p class="profile-email"><strong>Email:</strong> {{ user.email }}</p>
+
+            <h2 class="profile-orders-title">Ваши Заказы:</h2>
+            {% if orders %}
+                <ul class="profile-orders-list">
+                    {% for order in orders %}
+                        <li class="profile-order-card">
+                            <h5>Заказ № {{ order.id }}</h5>
+                            <p><strong>Дата создания:</strong> {{ order.create_date }}</p>
+                            <p><strong>Статус:</strong> {{ order.status }}</p>
+                            <p><strong>Адрес доставки:</strong> {{ order.address }}</p>
+                            <p><strong>Общая сумма:</strong> {{ order.total_price|floatformat:2 }} руб.</p>
+
+                            <h6>Состав заказа:</h6>
+                            <ul class="profile-order-items">
+                                {% for item in order.orderitem_set.all %}
+                                    <li>
+                                        Товар: {{ item.guitar.name }} x{{ item.quantity }} 
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p class="profile-no-orders">У вас пока нет активных заказов.</p>
+            {% endif %}
+        </div>
+    </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}

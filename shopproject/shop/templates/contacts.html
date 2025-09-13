@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Контакты{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}  
+{% endblock %}
+
+{% block content %}
+    <div class="container contact-container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h2 class="card-title">Свяжитесь с нами!</h2>
+                        </div>
+                        <p class="text-center">Вы можете обратиться лично к нам по следующим каналам:</p>
+                        <ul class="contact-list">
+                            <li>
+                                <i class="fas fa-envelope"></i>
+                              <strong>Почта:</strong> <a href="mailto:guiznotes@mail.ru">guiznotes@mail.ru</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone"></i>
+                                <strong>Телефон:</strong> <a href="#"> +7 (527) 421-78-53</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-share-alt"></i>
+                                <strong>Социальные сети:</strong>
+                                <ul class="social-links">
+                                    <li><a href="#">VK</a></li>
+                                    <li><a href="#">YouTube</a></li>
+                                    <li><a href="#">Telegram-канал</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

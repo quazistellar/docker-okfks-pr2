@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - {{ status.name }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+     <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>{{ status.name }}</h2>
+                            <a href="{% url 'status_list_view' %}" class="btn btn-custom">Вернуться к списку статусов</a>
+                            <a href="{% url 'status_update_view' status.pk %}" class="btn btn-custom">Редактировать</a>
+                            <a href="{% url 'status_delete_view' status.pk %}" class="btn btn-custom">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,63 @@
+<header>
+  <nav class="navbar navbar-expand-lg navbar-dark px-4">
+    <a class="navbar-brand fs-3 fw-bold" href="{% url 'main_page' %}">GuizNotes</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Переключить навигацию">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav fs-5">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="{% url 'main_page' %}">Главная</a>
+        </li>
+        <li class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle btn btn-link text-decoration-none" href="#"
+            id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            О компании
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'contacts' %}">Контакты</a></li>
+            <li><a class="dropdown-item" href="{% url 'how_to_find' %}">Как нас найти</a></li>
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle btn btn-link text-decoration-none" href="#"
+            id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Товары
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'categories' %}">Категории</a></li>
+            <li><a class="dropdown-item" href="{% url 'catalog' %}">Все товары</a></li>
+          </ul>
+        </li>
+            {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'basket_detail' %}">Корзина</a>
+        </li>
+          {% endif %}
+        <li class="nav-item dropdown">
+          <button class="nav-link dropdown-toggle btn btn-link text-decoration-none" href="#"
+            id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Личный кабинет
+          </button>
+            {% if user.is_authenticated %}
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'cab' %}">Профиль</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout_user' %}">Выход</a></li>
+          </ul>
+               {% endif %}
+           {% if not user.is_authenticated %}
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="{% url 'login_user' %}">Авторизация</a></li>
+            <li><a class="dropdown-item" href="{% url 'registration_user' %}">Регистрация</a></li>
+          </ul>
+               {% endif %}
+        {% if user.is_authenticated and user.is_staff %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'adm' %}">Администрирование</a>
+          </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
+</header>

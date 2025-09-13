@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - Заказ №{{ order.pk }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+   <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Заказ №{{ order.pk }}</h2>
+                            <p>Дата создания заказа: {{ order.create_date }}</p>
+                            <p>Адрес: {{ order.address }}</p>
+                            <p>Комментарий к заказу: {% if order.comment %}{{ order.comment }}{% else %}Нет комментария к заказу{% endif %}</p>
+                            <p>Итоговая сумма заказа: {{ order.total_price }} рублей</p>
+                            <p>Статус заказа: {{ order.status }}</p>
+                            <p>Никнейм покупателя: {{ order.user }}</p>
+                            <p>Имя покупателя: {{ order.first_name }}</p>
+                            <p>Фамилия покупателя: {{ order.last_name}}</p>
+                            <p>Отчество покупателя: {% if order.middle_name %}{{ order.middle_name }}{% else %}Нет отчества{% endif %}</p>
+                            <p>Дата завершения заказа: {% if order.end_date %}{{ order.end_date }}{% else %}Заказ ещё не завершён{% endif %}</p>
+                            <h3>Содержимое заказа:</h3>
+                            <ul>
+                                {% for item in order.orderitem_set.all %}
+                                    <li>
+                                        <strong>Гитара:</strong> {{ item.guitar.name }}
+                                        <br>
+                                        <strong>Количество:</strong> {{ item.quantity }}
+                                        <br>
+                                        <strong>Цена за штуку:</strong> {{ item.price }} рублей
+                                        <br>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            
+                            <a href="{% url 'order_list_view' %}" class="btn btn-custom">Вернуться к списку заказов</a>
+                            <a href="{% url 'order_update_view' order.pk %}" class="btn btn-custom">Редактировать</a>
+                            <a href="{% url 'order_delete_view' order.pk %}" class="btn btn-custom">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock %}

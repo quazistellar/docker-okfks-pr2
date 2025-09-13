@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - Корзина №{{ cart.pk }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated and user.is_staff %}
+    <div class="container contact-container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2>Корзина №{{ cart.pk }}</h2>
+                            <h3>Принадлежит пользователю {{ cart.user }}</h2>
+                            <p></p>
+                            <a href="{% url 'cart_list_view' %}" class="btn btn-custom">Вернуться к списку корзин</a>
+                            <a href="{% url 'cart_update_view' cart.pk %}" class="btn btn-custom">Редактировать</a>
+                            <a href="{% url 'cart_delete_view' cart.pk %}" class="btn btn-custom">Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт администратора</h1>
+   {% endif %}
+
+{% endblock %}
+

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Главная{% endblock %}
+
+{% block link_style %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<section class="py-5 text-center">
+    <div class="container">
+      <h1 class="display-4 fw-bold mb-3" style="color: #2ecc71;"> Лучшие гитары для настоящих музыкантов</h1>
+      <p class="lead mb-4" style="color: #2ecc71;">Выбирайте из широкого ассортимента акустических и электрогитар по выгодным ценам</p>
+      <a href="{% url 'catalog' %}" class="btn btn-custom btn-lg">Перейти в каталог</a>
+    </div>
+</section>
+
+<main class="container my-5">
+    <h2 class="text-center mb-5" style="color: #2ecc71;">Найдите своё звучание вместе с нами!</h2>
+    <div class="separator"></div>
+    <div class="row g-4">
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow">
+          <img src="https://musmag.com/images/stories/virtuemart/product/4nql43lo3a0wc4scwcsw4s0w4.jpg" class="card-img-top" alt="Электрогитара Fender Stratocaster" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title-min">Электрогитары Fender Stratocaster</h5>
+            <p class="card-text flex-grow-1 small-text">Идеальны для рок- и блюз-музыки, с ярким звуком и классическим дизайном.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow">
+          <img src="https://cdn1.ozone.ru/s3/multimedia-d/6850208965.jpg" class="card-img-top" alt="Акустическая гитара Yamaha F310" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title-min">Акустические гитары Yamaha</h5>
+            <p class="card-text flex-grow-1 small-text">Отличный выбор для начинающих с теплым и сбалансированным звуком.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-6 col-lg-4">
+        <div class="card h-100 shadow">
+          <img src="https://images.musicstore.de/images/0960/gibson-sg-special-vintage-cherry_1_GIT0057242-000.jpg" class="card-img-top" alt="Классическая гитара Cordoba C5" />
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title-min">GIBSON SG Special Vintage Cherry</h5>
+            <p class="card-text flex-grow-1 small-text">Легендарная гитара участника группы AC/DC</p>
+          </div>
+        </div>
+      </div>
+    </div>
+</main>
+{% endblock %}

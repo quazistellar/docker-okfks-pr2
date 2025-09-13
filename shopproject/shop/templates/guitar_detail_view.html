@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - {{ guitar.name }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="container contact-container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2>{{ guitar.name }}</h2>
+                                <p>Описание гитары: {{ guitar.description }}</p>
+                                <p>Цена: {{ guitar.price }} рублей</p>
+                                <p>Количество на складе: {{ guitar.in_shop_quantity }}</p>
+                                <p>Форма гитары: {{ guitar.guitar_form }}</p>
+                                <p>Категория: {{ guitar.category }}</p>
+                                <p>Доступна к заказу: {% if guitar.is_exists %}Да{% else %}Нет{% endif %}</p>
+                                <a href="{% url 'catalog' %}" class="btn btn-custom">Вернуться к каталогу</a>
+
+                                {% if request.user.is_authenticated %}
+                                    {% if guitar.is_exists %}
+                                        <form method="post" action="{% url 'basket_add' guitar.pk %}">
+                                            {% csrf_token %}
+                                            {{ form_basket }}
+                                            <button type="submit" class="btn btn-custom">Добавить в корзину</button>
+                                        </form>
+                                    {% else %}
+                                        <button class="btn btn-custom" disabled>Недоступно для заказа</button>
+                                    {% endif %}
+                                {% endif %}  
+                                <br>
+                                 {% if not user.is_authenticated %}
+                                 <p>
+                                 <a href="{% url 'login_user' %}" class="small-text">Войдите, чтобы добавлять товары в корзину</a>
+                                {% endif %}  
+
+                            </div>
+                            <div class="col-md-6">
+                                <img src="{{ guitar.photo.url }}" class="card-guitar-photo" alt="{{ guitar.name }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

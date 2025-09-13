@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - {{ category.name }}{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #2ecc71;">Товары в категории {{ category.name }}</h1>
+    <div class="row">
+        {% if guitars %}
+            {% for guitar in guitars %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if guitar.photo %}
+                            <img src="{{ guitar.photo.url }}" class="card-img-top" alt="{{ guitar.name }}">
+                        {% else %}
+                            <img src="{% static 'images/default.jpg' %}" class="card-img-top" alt="{{ guitar.name }}">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title-min">{{ guitar.name }}</h5>
+                            <p class="card-text small-text">{{ guitar.description}}</p>
+                            <p class="card-text"><strong>Цена:</strong> {{ guitar.price }} руб.</p>
+                            <a href="{% url 'guitar_onclick_detail_view' guitar.pk %}" class="btn btn-custom mt-auto"><i class="fas fa-shopping-cart"></i> Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <p class="text-center" style="color: #2ecc71;">В этой категории пока ничего нет.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

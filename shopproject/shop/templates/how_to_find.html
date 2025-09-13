@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Как нас найти{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="container contact-container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h2>Как нас найти?</h2>
+                                <p>
+                                    Мы с радостью ответим на все ваши предложения, жалобы, сообщения, песни, рифы, аккорды, стихи и вопросы.
+                                </p>
+                                <p>
+                                    Без проблем поможем Вам подобрать нужный инструмент, который точно понравится с первого взгляда!
+                                </p>
+                                <p>
+                                    Поиграть на гитаре вживую или найти нас можно здесь: г. Москва, ул. Неглинная 6/2,
+                                </p>
+                                <p>
+                                    и здесь: г. Москва, ул. Вятская 1,
+                                </p>
+                                <p>
+                                    и даже здесь: г. Москва, Краснохолмская наб. 3!
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="https://s2.stc.all.kpcdn.net/afisha/msk/wp-content/uploads/sites/5/2022/08/music-expert.jpg" class="contact-photo" alt="Фото офиса">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

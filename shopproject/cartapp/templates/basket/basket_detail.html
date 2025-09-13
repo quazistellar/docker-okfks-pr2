@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}
+    GuizNotes - Ваша корзина
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+<div class="container py-5">
+    <h1 class="mb-4 text-center" style="color: #2ecc71;">Корзина</h1>
+    {% if basket %}
+    <div class="table-responsive">
+        <table class="table table-bordered my-2">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col" class="text-center">Изображение</th>
+                    <th scope="col" class="text-center">Товар</th>
+                    <th scope="col" class="text-center">Количество</th>
+                    <th scope="col" class="text-center">Цена за шт.</th>
+                    <th scope="col" class="text-center">Цена за позицию</th>
+                    <th scope="col" class="text-center">Действие</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in basket %}
+                {% with item.guitar as guitar %}
+                <tr>
+                    <td class="text-center">
+                        {% if guitar.photo %}
+                        <img src="{{ guitar.photo.url }}" style="max-height: 100px; max-width: 100px; object-fit: contain; border-radius: 20px"
+                            alt="{{ guitar.name }}">
+                        {% else %}
+                        Нет фото
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'guitar_detail_view' guitar.pk %}">{{ guitar.name }}</a>
+                    </td>
+                    <td class="text-center">
+                        {{ item.quantity }} шт.
+                        <a href="{% url 'basket_decrement' guitar.pk %}" class="btn btn-sm btn-outline-secondary">-</a>
+                        <a href="{% url 'basket_increment' guitar.pk %}" class="btn btn-sm btn-outline-secondary">+</a>
+                    </td>
+                     
+                    <td class="text-center">
+                        {{ item.price }} руб.
+                    </td>
+                    <td class="text-center">
+                        {{ item.total_price }} руб.
+                    </td>
+                    <td class="text-center">
+                        <a href="{% url 'basket_remove' guitar.pk %}" class="btn btn-outline-danger">Удалить из корзины</a>
+                    </td>
+                </tr>
+                {% endwith %}
+                {% endfor %}
+                <tr>
+                    <td colspan="2" class="text-right font-weight-bold">Всего: </td>
+                    <td class="text-center">{{ basket|length }} шт.</td>
+                    <td colspan="2" class="text-center">{{ basket.get_total_price }} руб.</td>
+                    <td class="text-center"><a href="{% url 'basket_clear' %}" class="btn btn-danger">Очистить корзину</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+
+<div class="d-flex justify-content-between">
+        <a href="{% url 'catalog' %}" class="btn btn-custom">Назад в каталог</a>
+        <a href="{% url 'open_order' %}" class="btn btn-custom">Оформить заказ</a>
+    </div>
+    {% else %}
+</div> 
+<section class="py-5 text-center" style="background: linear-gradient(135deg, #144d14 0%, #0a1b0a 100%); color: #a3d9a5; position: relative; overflow: hidden; width: 100vw; margin: 0; left: 0;">
+    <div style="position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 15px;">
+        <b><h1 class="lead mb-4">Ваша корзина пока пуста!</h1></b>
+        <a href="{% url 'catalog' %}" class="btn btn-custom btn-lg" style="margin-top: 30px;">Перейти в каталог за покупками</a>
+    </div>
+</section>
+{% endif %}
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт!</h1>
+   {% endif %}
+
+{% endblock %}

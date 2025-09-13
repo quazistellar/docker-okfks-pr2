@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}GuizNotes - Категории товаров{% endblock %}
+
+{% block link_style %}
+    {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4" style="color: #2ecc71;">Категории товаров</h1>
+        <br>
+        <div class="row">
+            {% for category in categories %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        {% if category.photo %}
+                            <img src="{{ category.photo.url }}" alt="Категория {{ category.name }}" class="card-img-top" style="height: 400px; object-fit: cover;">
+                        {% else %}
+                            <img src="{% static 'photos/default.png' %}" alt="Категория {{ category.name }}" class="card-img-top" style="height: 400px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title-min">{{ category.name }}</h5>
+                            <p class="card-text small-text">{{ category.description|default:"Описание отсутствует" }}</p>
+                            <a href="{% url 'category_detail' category.pk %}" class="btn btn-custom mt-auto">Перейти в категорию</a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Категории отсутствуют!</p>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
+

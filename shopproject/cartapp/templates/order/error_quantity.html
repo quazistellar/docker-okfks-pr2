@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title_name %}Guiznotes - Ошибка количества{% endblock %}
+
+{% block link_style %}
+    {{ block.super }} 
+{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+    <div class="container contact-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-danger">Ошибка!</h2>
+                        <p class="card-text">
+                            {% if error_message %}
+                                {{ error_message }}
+                            {% else %}
+                                Произошла ошибка при обработке вашего заказа.  Пожалуйста, попробуйте снова!
+                            {% endif %}
+                        </p>
+                        <a href="{% url 'catalog' %}" class="btn btn-custom">Вернуться к каталогу</a>
+                        <a href="javascript:history.back()" class="btn btn-custom">Вернуться назад</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+            <br>
+            <h1 class="text-center">Сначала войдите в аккаунт!</h1>
+   {% endif %}
+
+{% endblock %}
+
